@@ -1,0 +1,689 @@
+﻿/**
+     * Method getPasswordNative
+     * 
+     * Native method to get a hidden password string
+     * for all platforms.
+     *  
+     * @return String
+     */
+    static native String getPasswordNative();
+
+    /**
+     * Method getNodeDirectory.
+     * 
+     * @param jniVector - node parameters returned stored into this vector
+     * @return int - return code
+     * @throws java.lang.Exception 
+     */
+    static native int getNodeDirectory( java.util.Vector<String> jniVector )
+            throws java.lang.Exception;
+
+    /**
+     * Method getStringCfgParameter
+     * 
+     * Retrieves a string parameter value from GET DBM CFG.
+     * parameterID is one of the numbers from PENative.SQLF_* 
+     * 
+     * @param parameterID - parameter ID
+     * @return String - parameter value
+     * @throws java.lang.Exception 
+     */
+    static native String getStringDbmCfgParameter( int parameterID )
+            throws java.lang.Exception;
+
+    /**
+     * Method getLongCfgParameter
+     * 
+     * Retrieves a long (uint) parameter value from GET DBM CFG.
+     * 
+     * @param dbmCfgParameterType - The type of the dbm cfg parameter，
+     *                              defined in the DBM_CFG_PARAMETER_TYPES
+     *                              and converted to int in the getDbmCfgParameterType()
+     * @param parameterID - parameter ID
+     * @return long - parameter value
+     * @throws java.lang.Exception 
+     */
+    static native long getLongDbmCfgParameter( int dbmCfgParameterType，
+            int parameterID ) throws java.lang.Exception;
+
+    /**
+     * Method setDbmCfgParameter
+     * 
+     * Sets an INTEGER parameter value to the DBM CFG.
+     * 
+     * parameterID can be taken from the DB2 list of configurable parameters，from 
+     * http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.admin.doc/doc/r0005181.htm
+     * for instance，the names start from SQLF_* and the values (integers) are token values in that document.
+     * 
+     * The parameter values to be set can be found in sqlenv.h for instance:
+     * 
+     *      Authentication Types                                                       
+     *      #define SQL_AUTHENTICATION_SERVER      0     Authenticate on Server         
+     *      #define SQL_AUTHENTICATION_CLIENT      1     Authenticate on Client         
+     *      #define SQL_AUTHENTICATION_DCS         2     Authenticate via DDCS          
+     *      #define SQL_AUTHENTICATION_DCE         3     Authenticate via DCE           
+     *      #define SQL_AUTHENTICATION_SVR_ENCRYPT 4     Auth at Server with encrypt    
+     *      #define SQL_AUTHENTICATION_DCS_ENCRYPT 5     Auth via DDCS with encrypt     
+     *      #define SQL_AUTHENTICATION_DCE_SVR_ENC 6     Auth via DCE or Server with
+     *      ...
+     *     
+     * @param parameterID - parameter ID
+     * @param parameterType - The integer parameter type，returned by getDbmCfgParameterType()
+     * @param parameterValue - integer parameter value
+     * @param nodeName - String the local node name to attach to (can be null)
+     * @param userName - String user name to attach to the local node (can be null)
+     * @param userPassword - String password (can be null)
+     * @throws java.lang.Exception 
+     */
+    static native void setDbmCfgParameter( int parameterID，int parameterType，
+            int parameterValue，String nodeName，String userName，
+            String userPassword ) throws java.lang.Exception;
+
+    /**
+     * Method setStringDbmCfgParameter
+     * 
+     * Sets a String parameter value to the DBM CFG.
+     * 
+     * parameterID can be taken from the DB2 list of configurable parameters，from 
+     * http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.admin.doc/doc/r0005181.htm
+     * for instance，the names start from SQLF_* and the values (integers) are token values in that document.
+     * Or in sqlutil.h，for instance SQLF_KTN_DFTDBPATH
+     * 
+     * @param parameterID - parameter ID
+     * @param parameterValue - String parameter value
+     * @throws java.lang.Exception 
+     */
+    static native void setStringDbmCfgParameter( int parameterID，
+            String parameterValue ) throws java.lang.Exception;
+
+    /**
+     * Method instanceAttach.
+     * 
+     * Attaches to the instance name.
+     * Used to identify whether the current local instance is up
+     * and to check whether the user/password pair are correct.
+     * 
+     * @param nodeName String
+     * @param userName String (can be null)
+     * @param userPassword String (can be null)
+     * @throws java.lang.Exception 
+     */
+    static native void instanceAttach( String nodeName，String userName，
+            String userPassword ) throws java.lang.Exception;
+
+    /**
+     * Method getDBDirectory.
+     * @param jniVector
+     * @return int
+     * @throws java.lang.Exception 
+     */
+    static native int getDBDirectory( java.util.Vector<String> jniVector )
+            throws java.lang.Exception;
+
+    /**
+     * Method uncatalogDatabaseNative.
+     * 
+     * Un�atalogs a db2 database using JNI + db2 native methods.
+     * 
+     * @param dbAlias - String DB alias
+     * @throws java.lang.Exception 
+     */
+    static native void uncatalogDatabaseNative( String dbAlias )
+            throws java.lang.Exception;
+
+    /**
+     * Method uncatalogNodeNative.
+     * 
+     * Un�atalogs a db2 node using JNI + db2 native methods.
+     * 
+     * @param nodeAlias - String node alias
+     * @throws java.lang.Exception 
+     */
+    static native void uncatalogNodeNative( String nodeAlias )
+            throws java.lang.Exception;
+
+    /**
+     * Method catalogDatabase.
+     * 
+     * Catalogs a db2 database using JNI db2 native methods.
+     * 
+     * @param dbName - String DB name
+     * @param dbAlias - String DB alias
+     * @param nodeName - String node name，null if local database
+     * @param dbPath - String
+     * @param dbComment - String
+     * @throws java.lang.Exception 
+     */
+    static native void catalogDatabaseNative( String dbName，String dbAlias，
+            String nodeName，String dbPath，String dbComment )
+            throws java.lang.Exception;
+
+    /**
+     * Method catalogNodeNative.
+     * 
+     * Catalogs a db2 database using JNI db2 native methods.
+     * 
+     * @param nodeName - String Node name
+     * @param nodeComment - String
+     * @param hostName - String
+     * @param serviceName - String
+     * @throws java.lang.Exception 
+     */
+    static native void catalogNodeNative( String nodeName，String nodeComment，
+            String hostName，String serviceName ) throws java.lang.Exception;
+
+    /**
+     * Method createDatabaseNative.
+     * 
+     * Creates a local performance database.
+     * 
+     * @param dbName - String DB name
+     * @param dbAlias - String DB alias
+     * @param dbPath - String
+     * @param codeSet - String "UTF-8"
+     * @param territory - String "US"
+     * @param pageSize - integer according to the table: 
+     *                  #define SQL_PAGESIZE_4K 4096
+     *                  #define SQL_PAGESIZE_8K 8192
+     *                  #define SQL_PAGESIZE_16K 16384
+     *                  #define SQL_PAGESIZE_32K 32768
+     * @param dbComment - String
+     * @param storagePaths - String[]
+     * @param nodeName - String node name (local node name) to attach to (can be null)
+     * @param userName - String user name to attach to the local node (can be null)
+     * @param userPassword - String password
+     * @throws java.lang.Exception 
+     */
+    static native void createDatabaseNative( String dbName，String dbAlias，
+            String dbPath，String codeSet，String territory，int pageSize，
+            String dbComment，String[] storagePaths，String nodeName，
+            String userName，String userPassword ) throws java.lang.Exception;
+
+    /**
+     * Method dropDatabaseNative.
+     * 
+     * Drops a local (performance) database.
+     * 
+     * @param dbAlias - String DB alias
+     * @throws java.lang.Exception 
+     */
+    static native void dropDatabaseNative( String dbAlias )
+            throws java.lang.Exception;
+			
+// create AAA on tp(Mandatory)
+db2 create db AAA pagesize 8192
+db2 connect to AAA
+db2 grant adadm on database to db2admin
+db2 create large tablespace CONTROL
+db2 create large tablespace SHORTTERM
+db2 create long tablespace LONGTERM
+db2 create nodegroup PENG
+db2 create bufferpool DATA pagesize 8192
+//
+
+compare and set
+expected value，new value
+
+
+Db2pm，udf/sp，ddl
+Monitored db，attach，system
+Type2 -> type4
+Dll fpesv*z
+
+
+db2 BLU，front-side language，cloud，english
+
+-- old
+ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAgU7P6nHvVPZVKKBy4bsrMlKZxWQy59jXaA1jwobKa+U6qDvNd6iXnHR70Wrj9eeFCI4yeQEMAMtRBTp
+
+
+io7+2p6pDsMHpBkoqpVXPXZLz+zsUgXQdE420lKXDN0ugNExoSlrnwHfGWZov6OzsAClIfwr90ciH3n56SWPbJzOszi0=
+
+-- new 
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvd3ntCAwan0xW62lFAObxGlzObpCO0oBl+cPKi63RtHELxYLEhfqCkfqnWyhSpRnUyelF5ojOvek9Jnvy0bN1vNhRfM942wCzMNPH5vLgWaSMVGxz5PKf5mw7bMxMHbHkNjwls2BpGUX4QbrsWcIv+OeqzZMcs+sXFpbK5D8q69GhVyzl/SiyOpLVKgo1b8PJQuJh5LleeL2LE5evpWDwAue9ktHaBafzlnrAs2qIWAOIoNQjKF7XqFQ/Mh/OAgRZ5J2sNmN5vzwZZcBmYAqxBgYdpzET7aecPK+2P3NTx3GDCGp5amzJkX7yzVdTfId1+9u+kqxz/++7tfz2L8LNw== root@esx-v4-033-062
+
+
+scp fpesrv.jar virtuser@172.16.75.209:/home/virtuser
+
+cp  /home/virtuser/fpesrv.jar /opt/ibm/OPM/RepositoryServer/bin/
+
+meta
+2a5e2cbdf59a5807b9bc4ac66f093c
+
+https://cattail.boulder.ibm.com/cattail/login
+
+fbgzn-qbnxa-iyicn-cnvlc-gdylf
+
+
+
+
+https://w3-connections.ibm.com/wikis/home?lang=en-us#!/wiki/Virtuoso/page/IWD on 172.x VMWare 
+Setup IWD:
+https://w3-connections.ibm.com/wikis/home?lang=en#!/wiki/Virtuoso/page/NextGen Install 
+
+
+/0config/nodepkgs/common/scripts/opmdb2
+
+
+
+1. https://w3-connections.ibm.com/wikis/home?lang=en#!/wiki/Virtuoso/page/NextGen Install 
+
+2. import product category license
+
+7. configure workoad base image
+http://172.16.40.23/build/cw/pureas_intel/1.1.0.0/virtualimages/MAESTRO_RHEL_X64.ova
+
+8. Accept the Workload Base Image License
+
+9. Verify the Platform Service Settings
+
+3. create ip group
+172.16.75.208 -- 172.16.75.223
+Name: Lab
+Subnet: 172.16.64.0
+Subnet mask: 255.255.240.0 (in CIDR format: 20)
+Gateway: 172.16.64.1
+Primary dns-server: 172.16.248.2
+
+
+4. create cloud groups
+Name: ESXSET13
+Hypervisor Type: ESX
+Group Type: Select Managed by a Virtual Center
+Hostname: 172.16.64.32
+User name: workloads
+Password: noXDJan18
+
+
+
+Name: ESXSET14
+Hypervisor Type: ESX
+Group Type: Select Managed by a Virtual Center
+Hostname: 172.16.64.32
+User name: workloads
+Password: noXDJan18
+
+5. start hypervisors
+a. network
+b. storage
+
+6. enable pattern types
+all added pts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://172.16.75.220/dashboard/databaseLog/?databaseId=database-db2.11376019689027&deploymentId=d-80aaaee2-eafc-4b54-9dd7-4a359f250759&databaseName=AAA
+
+
+// iwd日志文件
+/drouter/ramdisk2/mnt/raid-volume/raid0/logs/error/error.log		GUI
+/drouter/ramdisk2/mnt/raid-volume/raid0/usr							Service
+// vm日志文件
+/0config/0config.log
+
+tail -f /drouter/ramdisk2/mnt/raid-volume/raid0/logs/error/error.log 
+
+
+Summary Field: Brief，but detailed description of what the problem is (don't use terms like UI is ugly etc). Make sure to add "keywords" as this is a searchable field.
+
+Description Section should contain the following:
+
+Description: This should be an expanded，detailed description of the problem that is outlined in the Summary Field. If browser specific problem，please ensure that you specify the version of the browser that you are using.
+
+Build #: Use Service purescale version command to get the build versions on the PSM. Rack identifier/name.
+
+Steps To Reproduce: This section should contain detailed steps to reproduce the problem
+
+Actual Results: This is the result of what happens once the last step in the steps to reproduce is executed
+
+Expected Results: This is what we would expect to happen when we complete the last step in the steps to reproduce.
+
+Log File Extract: Insert extracts from all log files that are relevant. * it is important to add this to all defects regarding db or instance issues. It is more preferable to attach the log file to the defect. Also，for all UI defects，ensure that a screenshot of the UI issue is attached to the defect.
+
+
+
+
+Follow on defects from PDTX FP3 on Intel:
+Version = 1.0.0.4
+Planned For = PureDB Backlog
+
+Crowned Eagle Defects and Tasks:
+Version = PureDB 1.1.0.0
+Planned For = PureDB 1.1.0.0
+
+
+contact Dao Jun Zhang for SDA and BundleGen
+
+
+216-223
+
+wget -nv http://172.16.40.23/fileserv/test/setup/installerNextGen.sh -O /root/installer.sh
+
+/root/installer.sh -b latest -v 4.0.0.2 -F 2.0.1.2/latest -D 1.1.0.8/latest -O 1.0.1.1/latest -I 1.0.1.1/latest -n 172.16.76 -x 240  -y 255
+
+
+
+sysadmin/passw0rd
+
+service iwd install_ptype ptype-webapp 2.0.1.1 latest
+
+
+把你的手机号码最后一位，乘以2，再加5，再乘50，再加上1763，然后减去你的出生年，得到三位数字，第一位是你手机尾号，后两位是你的年龄。
+
+(x*2+5)*50 + 1763 - 1978 = 100*x + 2013 -1978
+
+passw0rd
+
+http://www.dianping.com/shop/3935359#bd=baidu_map
+
+{"1":{"lastATUpdate":0，"opmTemplateLevel":"MIDDLE"，"autoThrottle":true}}
+
+
+周五晚八点 奥森小场
+报名：，，，	14人
+待定：圣星
+
+
+<isDisplayString size="511" />
+
+1. 介绍新的东西
+a bundle
+b 配置 io，base-cretiria，config
+
+
+2. 显示三个连接comment属性
+稍作介绍
+opmTemplateLevel=LOW;autoThrottle=true
+
+3. 分别展示三个连接的配置信息
+a 不进行auto-throttle
+b middle level
+c low level
+
+4. 修改basecretiria，产生通知
+
+5. 再次展示配置信息，观察变化
+
+6. 展示日志信息。
+
+H8HBY7HF
+
+
+1. 在给定时间内调整次数超过指定次数，报警并且等待一段时间后，重新开始。
+
+2. 要考虑的排序规则
+a 上次调整时间	自动清零
+b 调整次数	自动清零
+c 模板级别  自动降级
+
+11.27 请假一天 切记
+
+passw0rd
+
+
+Story 125424 - Need the IPAS Database Performance Monitor Shared Service to Monitor More Databases or More Workload in a Cloud Group (Scale Up) 
+
+patterntype.opm
+plugin.com.ibm.opm
+plugin.com.ibm.dtrc
+plugin.com.ibm.opm
+plugin.com.ibm.opm.test
+plugin.com.ibm.opmdb2
+plugin.com.ibm.opmext
+plugin.com.ibm.oqwtdb2
+
+1. rempte perfdb，2. self throttling 3. auto scale VM of opmdb2
+
+1. 已有vm的osagent能否直接连接到后装的itm share service上。
+2. 查看日志，看看SDA能否正常采集数据
+
+passw0rd
+３ｐｗ０５９
+
+要咨询的问题
+1. SDA是不是必须得用bundlegen的output安装才行，只在agent端安装，指向RTEMS？ 命令行参数实例。
+2. 怎么定义situition的描述信息跟actions？
+3. 如果vm是在itm ss部署前生成的，怎么跟itm连接起来的？
+4. lx8266
+
+curl -r 0-100 -o img.part1 http://9.30.6.212:8080/examples/opm-1.0.1.2.tgz
+
+df -h
+
+多语言
+Ellen CY Chen/Taiwan/IBM@IBMTW
+
+
+
+opm_itm_system_overview_rb_used_pct[((DBMC504 â€“ FCM413) / DBMC504 * 100)]
+((DBMC504 - FCM413) / DBMC504 * 100)
+
+(case DBMC504 when null then 0 when 0 then 0 else (((DBMC504 - FCM413) / DBMC504) * 100) end)
+
+
+ df -BM $1|sed 's/\s\+/ /g' | cut -d' ' -f4 |grep -v 'Available'
+ 
+ https://w3-connections.ibm.com/wikis/home?lang=en#!/wiki/Database%20oil/page/Eclipse%20personal%20builds
+ IWD Tech PType OPM
+ 
+ 
+wget -nv http://172.16.40.23/fileserv/test/setup/installerNextGen.sh -O ./installer.sh
+ 
+wget -nv http://172.16.40.23/fileserv/test/setup/installerNextGen.sh -O /root/installer.sh
+
+/root/installer.sh -b latest -v 4.1.0.0 -F 2.0.1.2/latest -D 1.1.0.9/latest -I 1.0.1.1/latest -n 172.16.79 -x 240  -y 255
+
+/root/installer.sh -b latest -v 4.0.0.2 -F 2.0.1.2/latest -D 1.1.0.9/latest -I 1.0.2.0/latest -n 172.16.79 -x 240  -y 255
+
+./installer.sh -b latest -v 5.0.0.0 -F 2.0.1.2/latest -D 1.1.0.10/latest -I 1.0.2.0/latest -O 1.0.2.0/latest -n 172.16.79 -x 240  -y 255
+
+
+
+ find / -name "*opm.scripts*"
+ 
+ service iwd install_ptype ptype-dbaas 1.1.0.8 latest
+ service iwd install_ptype ptype-itm 1.0.1.3 20140221-1515-203
+ service iwd install_ptype ptype-itm 1.0.1.1 20130925-0418-113
+  service iwd install_ptype ptype-itm 1.0.2.0 20130925-0418-113
+ service iwd link_files http://172.16.40.23/managed/plugins
+ 
+ passw0rd
+ 
+ http://172.16.40.23/builds/units/ptype-itm/
+ 
+ https://xbox.svl.ibm.com:9443/secure/OPM_2013_2Q_BASSWOOD_PATCH/N/opm-itm/N20140226_2051/
+ 
+ 42872 
+
+ 
+ tar -cvzf ./opm.scripts.tgz._ibmres_1394519080625 ./scripts/ ./locale/ ./install.py
+ 
+ tar -xvzf ./opm.scripts.tgz._ibmres_1394519080625
+ 
+ https://172.16.65.46:9444/storehouse/admin/files/opm/DB2_ESE_Restricted_QS_Activation_97.zip
+ 
+ maestro.downloadx("https://172.16.65.46:9444/storehouse/admin/files/opm/DB2_ESE_Restricted_QS_Activation_97.zip"，tempDir)
+ 
+ /opt/IBM/maestro/agent/usr/servers/Database-Performance-Monitor.11394691445482/tmp
+ https://172.16.65.46/storehouse/admin/files/opm/opm-agent.zip
+ 
+ 
+ 
+ 
+ 
+ /drouter/ramdisk2/mnt/raid-volume/raid0/usr/servers/storehouse/docroot/_ibmvirtuoso_/admin/plugins/opm/1.0.2.0/parts
+ /drouter/ramdisk2/mnt/raid-volume/raid0/usr/servers/storehouse/docroot/_ibmvirtuoso_/admin/files/opm
+ /opt/IBM/maestro/agent/usr/servers/Database-Performance-Monitor.11394601863116/scripts/OPM
+ 
+ 
+ https://172.16.76.243:15211/IWDLICServletWeb/IWDLICServlet
+ 
+
+I:\projects\m\maestro\plugins\opm
+
+
+http://9.123.149.133:15200/cnp.html?-1021A=ROOT&-5001=MOPHYSICAL&-12006=SYSADMIN&-10105=PHYSICAL_ENTERPRISE:621&-2400=%3C%3E&-10114=445FB06FB5994B6D:CCAEC8E56A404C&-1020=PHYSICAL_ENTERPRISE&-1022=Enterprise%20Status&-12000=SYSADMIN
+
+select STMT_TEXT from table(MON_GET_PKG_CACHE_STMT(null，null，'<modified_within>1</modified_within>'，-2))
+
+
+http://www.transparcel.com/
+http://www.transparcel.com/
+
+
+
+rtemsyz.softlayer.com or IP 10.106.39.68 
+use at Protocol IP.SPIPE 
+use Port 3660 
+
+$CANDLE_HOME/$ITMBINARCH/h9/bin/mail.sh -m db -e &amp;{KH9_RESOURCE_DATA.env_name} -r &amp;{KH9_RESOURCE_DATA.ratio}
+
+
+$CANDLE_HOME/$ITMBINARCH/h9/bin/mail.sh -m mem -e &amp;{KH9_MEMORY_DATA.machine} -r &amp;{KH9_MEMORY_DATA.usage_pct} 
+
+*IF *VALUE KH9_BLUEMIX_DATA.yellow_fabric *EQ &apos;down&apos; *OR *IF *VALUE KH9_BLUEMIX_DATA.yellow_staging_0 *EQ &apos;down&apos; *OR *IF *VALUE KH9_BLUEMIX_DATA.yellow_staging_1 *EQ &apos;down&apos; *OR *IF *VALUE KH9_BLUEMIX_DATA.yello_production *EQ &apos;down&apos;
+
+
+
+
+您好，返厂具体详情您可以参考一下哦！
+1）将机器（包括电池后盖，保修期内有问题的配件可以一同寄回检测）寄回到公司处理时
+请随机附上一张纸上写明您机器的故障、姓名、邮箱、联系电话和详细地址，并注明返厂的物品明细。
+2）机器里面的资料、贴膜、无关配件和装饰物等请自行保存好，公司不做保留。您需要先备份好数据的，返厂的话，我们对手机的数据是不做保留的。
+3、地址：珠海市唐家湾高新区科技创新海岸魅族科技楼
+电话：4007883333
+邮编：519085
+收件人：黄小影
+
+您好，只要凭有效的保修卡和发票，就可以通过专卖店返厂，专卖店寄返邮寄费是由专卖店承担的
+
+您好，我们一般是收到机器之后的第二个工作日开始检测处理，检测时间是3个工作日左右，一般收到机器后没有费用产生需要5-7个工作日左右寄返，有费用产生了，需要核实到汇款后的3-5个工作日左右处理好的哦。
+
+
+172.20.188.152
+/opt/IBM/maestro/ITM/bin/cinfo
+/opt/IBM/maestro/ITM/bin/itmcmd agent start o8
+/tmp/opm-agent/opm-agent/installIraAgent.sh /opt/IBM/maestro/ITM
+/opt/IBM/maestro/ITM/bin/itmcmd config -A o8
+/opt/IBM/maestro/ITM/bin/uninstall.sh -i -f o8 aix526
+/opt/IBM/ITMSS/bin/uninstall.sh -i -f o8 li8266
+tail -f /tmp/zysun.log
+
+passw0rd
+
+/opt/ibm/OPM/OPMstop.sh
+rm -rf /opt/ibm/OPM/dscomponents/opm-webclient/com.ibm.datatools.tivoli.agent.ko8*.*
+cp /tmp/zysun/*.jar /opt/ibm/OPM/dscomponents/opm-webclient/
+ls /opt/ibm/OPM/dscomponents/opm-webclient/ | grep tivoli
+/opt/ibm/OPM/OPMstart.sh
+rm -rf /tmp/zysun.log
+rm -rf /opt/ibm/OPM/logs/datatools.log
+
+tail -f /tmp/zysun.log
+   
+  
+/opt/IBM/maestro/ITM/bin/itmcmd agent stop o8
+/opt/IBM/maestro/ITM/bin/uninstall.sh -f -i o8 lx8266
+rm -rf /tmp/zysun/opm-agent/
+cd /tmp/zysun
+unzip opm-agent.zip
+cd /tmp/zysun/opm-agent
+chmod +x *.sh
+/tmp/zysun/opm-agent/installIraAgent.sh /opt/IBM/maestro/ITM
+rm -rf /opt/IBM/maestro/agent/usr/servers/Database-Performance-Monitor.11400219894170/scripts/OPM/shell/*.json
+rm -rf /tmp/zysun/opm-agent/
+/opt/IBM/maestro/ITM/bin/cinfo
+
+
+select B.TBSP_NAME,(A.TBSP_USED_PAGES*100/A.TBSP_USABLE_PAGES) as PCT from db2pm_3.fact_tablespace_1 as A inner join db2pm_3.dim_tablespace AS B on A.tbspid_id=B.tbspid_id and ucase(B.TBSP_TYPE)='DMS' inner join (select tbspid_id,max(COLLECTION_TIMESTAMP) as COLLECTION_TIMESTAMP from db2pm_3.fact_tablespace_1 where (values timestampdiff(4,char((values current timestamp) - COLLECTION_TIMESTAMP))) <= 900 group by tbspid_id) as C on C.tbspid_id=A.tbspid_id and C.COLLECTION_TIMESTAMP=A.COLLECTION_TIMESTAMP
+
+(values timestampdiff(4,char((values current timestamp) - COLLECTION_TIMESTAMP)))
+
+db2 "select distinct B.TBSP_NAME,(A.TBSP_USED_PAGES*100)/A.TBSP_USABLE_PAGES as PCT from db2pm_3.fact_tablespace_1 as A inner join db2pm_3.dim_tablespace AS B on A.tbspid_id=B.tbspid_id where ucase(B.TBSP_TYPE)=ucase('dms') order by B.TBSP_NAME"
+
+db2 "select distinct tbspid_id from db2pm_3.fact_tablespace_1 order by 1 desc"
+db2 "select distinct tablespace_id from db2pm_3.tablespace order by 1 desc"
+  
+  http://XOODE7MF:uwSref1Y@75.126.127.70:8080
+    
+  05200002 北京福仁堂医药经营部分部 朝阳区北苑2号院 100022
+  
+  
+  rack5 https://172.18.32.32/dashboard/runtime/shared-service/#d-cda654ca-a85b-4881-8db2-7d1e8ff6e973
+  michael https://172.16.65.215/login/?postLoginTargetURI=%2Fdashboard%2Fruntime%2Fshared-service%2F#d-5220ea1c-aa1a-49e0-a0fe-81e049282f50
+  
+  
+ 
+ WE web console:
+ http://9.123.149.197:55000/console/main/index.jsp
+ iriswang/xcry0202
+
+ 
+ 晚上在张北吃一顿，住一晚，第二天回家
+http://www.mafengwo.cn/i/1302970.html
+http://www.motorfans.com.cn/bbs/t_17433743_1.htm
+http://www.mafengwo.cn/i/2858217.html
+
+
+
+change sec log:
+db2 get db cfg | find /i "log"
+LOGPRIMARY=1
+LOGSECOND=20
+SORTHEAP=20
+
+change dbm cfg:
+MAX_COORDAGENTS
+
+
+
+CASE WHEN TABLESPACE_USABLE_PAGES = 0 THEN NULL ELSE ((CAST(TABLESPACE_USED_PAGES as DEC(20,2)) / CAST(TABLESPACE_USABLE_PAGES as DEC(20,2))) * 100) END
+
+opm_tbs_used_size 
+opm_tbs_unused_size
+
+中企动力 内蒙空调.com
+
+http://9.123.120.118:2014/bet/vote
+
+
+rack5
+iwd: 172.18.32.32
+OPM: 172.17.34.152
+
+
+
+SELECT B.TBSP_NAME, (A.TBSP_USED_PAGES * 100 / A.TBSP_USABLE_PAGES) AS PCT
+  FROM
+       DB2PM_3.FACT_TABLESPACE_1 AS A 
+	   INNER JOIN DB2PM_3.DIM_TABLESPACE AS B 
+		ON A.TBSPID_ID = B.TBSPID_ID AND UCASE(B.TBSP_TYPE) = 'DMS' 
+	   INNER JOIN (
+                              SELECT TBSPID_ID, MAX(COLLECTION_TIMESTAMP) AS COLLECTION_TIMESTAMP
+                                FROM DB2PM_3.FACT_TABLESPACE_1
+                                WHERE (VALUES TIMESTAMPDIFF(4, CHAR((VALUES CURRENT TIMESTAMP) - COLLECTION_TIMESTAMP))) <= 900
+                                GROUP BY TBSPID_ID
+					) AS C 
+		ON C.TBSPID_ID = A.TBSPID_ID AND C.COLLECTION_TIMESTAMP = A.COLLECTION_TIMESTAMP
+		
+		
+周五小场报名：
+阿远，alan，教主，小水 4人
+
+
+scp fpesrv.jar virtuser@172.16.75.209:/home/virtuser
+scp -i ./id_rsa  virtuser@172.25.74.12:/opt/IBM/maestro/agent/usr/servers/Database-Performance-Monitor.11405441376786.OPM/
